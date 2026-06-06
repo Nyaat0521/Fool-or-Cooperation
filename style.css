@@ -1,0 +1,181 @@
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #11141a;
+    color: #f3f4f6;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h1 { 
+    margin-bottom: 2px; 
+    color: #e74c3c; 
+    font-size: 2.5em;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+}
+.sub-title {
+    margin-bottom: 20px; 
+    color: #9ca3af;
+    font-weight: bold;
+    font-size: 0.9em;
+    letter-spacing: 1px;
+}
+.game-container {
+    width: 100%;
+    max-width: 900px;
+    background: #1e2530;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+    border: 1px solid #2d3748;
+}
+.info-panel {
+    background: #0f1319;
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #3498db;
+}
+#round-num {
+    font-weight: bold; 
+    color: #e74c3c;
+}
+#your-role {
+    color:#3498db; 
+    font-weight:bold; 
+    font-size: 1.2em;
+}
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background: #141e30;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    min-height: 250px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
+}
+.player-slot {
+    background: #242f41;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid #2d3748;
+    transition: all 0.3s;
+}
+.player-slot.active { 
+    border-color: #e74c3c; 
+    box-shadow: 0 0 15px rgba(231, 76, 60, 0.4);
+}
+.player-slot.you { 
+    background: #1b365d; 
+    border: 2px solid #3498db; 
+    box-shadow: 0 0 15px rgba(52, 152, 219, 0.3);
+}
+.crowns { color: #f1c40f; font-weight: bold; font-size: 1.1em; }
+.played-card {
+    display: inline-block;
+    width: 55px;
+    height: 80px;
+    background: #ffffff;
+    color: #11141a;
+    border-radius: 6px;
+    line-height: 80px;
+    font-size: 1.7em;
+    font-weight: bold;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    animation: popIn 0.3s ease-out;
+}
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+.played-card.canceled {
+    background: #4a5568;
+    color: #718096;
+    text-decoration: line-through;
+    box-shadow: none;
+    opacity: 0.6;
+}
+.my-hand-section {
+    background: #1a202c;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #2d3748;
+}
+.my-hand-section h3 { margin-top: 0; color: #a0aec0; font-size: 1em; text-transform: uppercase;}
+.hand-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+.card {
+    width: 60px;
+    height: 90px;
+    background: #f9fafb;
+    color: #111827;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.card:hover {
+    transform: translateY(-15px);
+    background: #3498db;
+    color: white;
+    box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
+}
+.log-box {
+    background: #0b0f17;
+    height: 140px;
+    overflow-y: auto;
+    padding: 15px;
+    border-radius: 8px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.95em;
+    margin-top: 20px;
+    border: 1px solid #2d3748;
+    line-height: 1.5;
+}
+.btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 1.05em;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+.btn:hover { background: #c0392b; }
+.modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); display: flex; justify-content: center; align-items: center;
+    z-index: 100; display: none;
+    backdrop-filter: blur(5px);
+}
+.modal-content {
+    background: #1e2530; padding: 40px; border-radius: 12px; text-align: center; max-width: 500px;
+    border: 2px solid #e74c3c; box-shadow: 0 0 30px rgba(231, 76, 60, 0.3);
+}
+#modal-title { color: #e74c3c; font-size: 2em; margin-top:0; }
+#modal-body { text-align: left; margin: 25px 0; line-height: 1.8; font-size: 1.1em; }
