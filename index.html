@@ -1,435 +1,129 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fool or Cooperation (フルコポ) オンライン</title>
-    <style>
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: #11141a;
-            color: #f3f4f6;
-            margin: 0;
-            padding: 20px;
-            text-align: center;
-        }
-        h1 { 
-            color: #e74c3c; 
-            font-size: 2.5em;
-            letter-spacing: 2px;
-            margin-bottom: 2px;
-            text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
-        }
-        .sub-title {
-            margin-bottom: 20px; 
-            color: #9ca3af;
-            font-weight: bold;
-            font-size: 0.9em;
-            letter-spacing: 1px;
-        }
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
-            background: #1e2530; 
-            padding: 25px; 
-            border-radius: 12px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
-            border: 1px solid #2d3748;
-        }
-        .setup-screen, .game-screen { display: none; }
-        .active { display: block; }
-        
-        button { 
-            background-color: #e74c3c; 
-            color: white; 
-            border: none; 
-            padding: 12px 24px; 
-            font-size: 16px; 
-            font-weight: bold;
-            border-radius: 6px; 
-            cursor: pointer; 
-            transition: 0.2s; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        button:hover { background-color: #c0392b; }
-        input, select { 
-            padding: 12px; 
-            font-size: 16px; 
-            border-radius: 6px; 
-            border: 1px solid #2d3748; 
-            margin: 10px; 
-            background: #0f1319;
-            color: white;
-        }
-        
-        .info-panel {
-            background: #0f1319;
-            padding: 12px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 1.1em;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-left: 4px solid #3498db;
-        }
-        .player-list { 
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px 0; 
-        }
-        .player-card { 
-            background: #242f41; 
-            padding: 15px; 
-            border-radius: 8px; 
-            border: 2px solid #2d3748;
-        }
-        .player-card.you {
-            background: #1b365d;
-            border-color: #3498db;
-        }
-        
-        .field { 
-            background: #141e30; 
-            height: 160px; 
-            border-radius: 12px; 
-            margin: 20px 0; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 15px; 
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.6);
-        }
-        .played-card {
-            background: white;
-            color: #11141a;
-            width: 55px;
-            height: 80px;
-            border-radius: 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.6em;
-            font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        }
-        .played-card.canceled {
-            background: #4a5568;
-            color: #718096;
-            text-decoration: line-through;
-            box-shadow: none;
-            opacity: 0.6;
-        }
-        .owner-name {
-            font-size: 10px;
-            color: #718096;
-            margin-top: 2px;
-        }
-
-        .hand { 
-            display: flex; 
-            justify-content: center; 
-            gap: 12px; 
-            margin-top: 20px; 
-            flex-wrap: wrap; 
-            background: #1a202c;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #2d3748;
-        }
-        .card { 
-            background: #f9fafb; 
-            color: #111827; 
-            width: 60px; 
-            height: 90px; 
-            border-radius: 6px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 1.8em; 
-            font-weight: bold; 
-            cursor: pointer; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
-            transition: 0.2s ease; 
-        }
-        .card:hover { 
-            transform: translateY(-15px); 
-            background: #3498db; 
-            color: white;
-            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.4);
-        }
-        .card.joker { background: #9b59b6; color: white; }
-        
-        .log { 
-            background: #0b0f17; 
-            padding: 15px; 
-            border-radius: 8px; 
-            max-height: 140px; 
-            overflow-y: auto; 
-            text-align: left; 
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.95em; 
-            border: 1px solid #2d3748;
-            line-height: 1.5;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>フルコポ — Fool or Corporation</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <h1>Fool or Cooperation</h1>
-    <div class="sub-title">― 通称：フルコポ ―</div>
-    
-    <div class="container">
-        <div id="setupScreen" class="setup-screen active">
-            <h3>ゲームモード選択</h3>
-            <label>モード: 
-                <select id="gameMode">
-                    <option value="normal">通常モード (研究者3 / 刺客2 / 魔女1)</option>
-                    <option value="expert">上級モード (子供・魔女見習い 追加)</option>
-                </select>
-            </label><br>
-            <input type="text" id="playerName" placeholder="プレイヤー名を入力">
-            <button onclick="joinGame()">ルームを作成してゲーム開始</button>
+  <!-- ===== TITLE SCREEN ===== -->
+  <div id="screen-title" class="screen active">
+    <div class="title-bg"></div>
+    <div class="title-content">
+      <div class="title-en">FOOL or CORPORATION</div>
+      <div class="title-jp">フルコポ</div>
+      <p class="title-sub">6人用・役職カードゲーム</p>
+      <button class="btn-main" onclick="Game.showScreen('screen-setup')">ゲームをはじめる</button>
+    </div>
+  </div>
+
+  <!-- ===== SETUP SCREEN ===== -->
+  <div id="screen-setup" class="screen">
+    <div class="screen-inner">
+      <h2 class="screen-title">プレイヤー設定</h2>
+      <p class="screen-sub">あなたの名前と友達5人の名前を入力してください</p>
+      <div id="player-inputs" class="player-inputs"></div>
+      <button class="btn-main" onclick="Game.startGame()">ゲーム開始</button>
+      <button class="btn-sub" onclick="Game.showScreen('screen-title')">← もどる</button>
+    </div>
+  </div>
+
+  <!-- ===== ROLE REVEAL SCREEN ===== -->
+  <div id="screen-role" class="screen">
+    <div class="screen-inner">
+      <h2 class="screen-title" id="role-player-name"></h2>
+      <p class="screen-sub">あなたの役職カードを確認してください</p>
+      <div id="role-card-wrap" class="role-card-wrap">
+        <div class="role-card face-down" id="role-card" onclick="Game.flipRoleCard()">
+          <div class="role-card-front">?</div>
+          <div class="role-card-back">
+            <div class="role-icon" id="role-icon"></div>
+            <div class="role-name" id="role-name"></div>
+            <div class="role-desc" id="role-desc"></div>
+          </div>
         </div>
+      </div>
+      <button class="btn-main hidden" id="btn-role-next" onclick="Game.nextRoleReveal()">確認した →</button>
+      <p class="hint-text">カードをタップして役職を確認</p>
+    </div>
+  </div>
 
-        <div id="gameScreen" class="game-screen">
-            <div class="info-panel">
-                <div>ROUND: <span id="round-num" style="font-weight: bold; color: #e74c3c;">1</span> / 9</div>
-                <div id="roleDisplay">あなたの秘密の役職: <span style="color:#3498db; font-weight:bold;">-</span></div>
-                <button onclick="resolveRound()" id="resolve-btn" style="background-color: #2ecc71;">カードをオープンして判定</button>
-            </div>
-            
-            <h3>FIELD（出されたカード）</h3>
-            <div class="field" id="field"></div>
-
-            <h3>PLAYERS（プレイヤー情報）</h3>
-            <div class="player-list" id="playerList"></div>
-
-            <h3>YOUR HAND（あなた手札）</h3>
-            <div class="hand" id="myHand"></div>
-
-            <h3 style="margin-top: 30px;">LOG（試合ログ）</h3>
-            <div class="log" id="gameLog"></div>
-        </div>
+  <!-- ===== GAME SCREEN ===== -->
+  <div id="screen-game" class="screen">
+    <div class="game-header">
+      <div class="round-info">
+        <span class="round-label">ROUND</span>
+        <span class="round-num" id="round-num">1</span>
+      </div>
+      <button class="btn-score" onclick="Game.toggleScoreboard()">スコア</button>
     </div>
 
-    <script>
-        const ROLES_NORMAL = ["研究者", "研究者", "研究者", "刺客", "刺客", "魔女"];
-        const ROLES_EXPERT = ["研究者", "研究者", "研究者", "刺客", "刺客", "魔女", "子供", "魔女見習い"];
-        
-        let gameState = {
-            mode: "normal",
-            players: [],
-            field: [],
-            log: [],
-            round: 1
-        };
+    <!-- 対戦相手の手札表示エリア -->
+    <div class="opponents-area" id="opponents-area"></div>
 
-        function joinGame() {
-            const name = document.getElementById("playerName").value.trim();
-            if (!name) return alert("名前を入力してください！");
-            
-            gameState.mode = document.getElementById("gameMode").value;
-            const baseRoles = gameState.mode === "normal" ? [...ROLES_NORMAL] : [...ROLES_EXPERT];
-            
-            const shuffledRoles = baseRoles.sort(() => Math.random() - 0.5);
+    <!-- 場のカード -->
+    <div class="field-area" id="field-area">
+      <div class="field-label">場のカード</div>
+      <div class="field-cards" id="field-cards"></div>
+    </div>
 
-            gameState.players = [
-                { name: name, role: shuffledRoles[0], hand: [], crowns: 0, actualRole: shuffledRoles[0], isYou: true },
-                { name: "CPU 1", role: shuffledRoles[1], hand: [], crowns: 0, actualRole: shuffledRoles[1], isYou: false },
-                { name: "CPU 2", role: shuffledRoles[2], hand: [], crowns: 0, actualRole: shuffledRoles[2], isYou: false },
-                { name: "CPU 3", role: shuffledRoles[3], hand: [], crowns: 0, actualRole: shuffledRoles[3], isYou: false },
-                { name: "CPU 4", role: shuffledRoles[4], hand: [], crowns: 0, actualRole: shuffledRoles[4], isYou: false },
-                { name: "CPU 5", role: shuffledRoles[5], hand: [], crowns: 0, actualRole: shuffledRoles[5], isYou: false }
-            ];
+    <!-- プレイヤーの手札 -->
+    <div class="player-area">
+      <div class="player-info-bar">
+        <span id="my-name-label" class="my-name"></span>
+        <span id="my-rounds-label" class="my-rounds"></span>
+      </div>
+      <div class="hand-cards" id="hand-cards"></div>
+    </div>
 
-            if (gameState.mode === "expert") {
-                gameState.players.forEach(p => {
-                    if (p.role === "子供") {
-                        p.actualRole = Math.random() > 0.5 ? "研究者" : "刺客";
-                    }
-                });
-            }
+    <!-- メッセージ -->
+    <div class="message-bar" id="message-bar"></div>
+  </div>
 
-            gameState.players.forEach(p => {
-                p.hand = generateHand();
-            });
+  <!-- ===== JOKER OVERLAY ===== -->
+  <div id="joker-overlay" class="overlay hidden">
+    <div class="overlay-box">
+      <div class="overlay-title">🃏 ジョーカーを出す</div>
+      <p class="overlay-desc">もう1枚手札を見せてください。<br>そのカードの代わりとして機能します。</p>
+      <div class="hand-cards small" id="joker-hand"></div>
+      <button class="btn-sub" onclick="Game.cancelJoker()">キャンセル</button>
+    </div>
+  </div>
 
-            document.getElementById("setupScreen").classList.remove("active");
-            document.getElementById("gameScreen").classList.add("active");
-            
-            addLog(`♠ フルコポへようこそ。あなたの秘密の役職は【${gameState.players[0].role}】です。`);
-            updateUI();
-        }
+  <!-- ===== RESULT OVERLAY ===== -->
+  <div id="result-overlay" class="overlay hidden">
+    <div class="overlay-box">
+      <div class="result-badge" id="result-badge"></div>
+      <div class="result-cards" id="result-cards"></div>
+      <button class="btn-main" onclick="Game.nextRound()">次のラウンドへ →</button>
+    </div>
+  </div>
 
-        function generateHand() {
-            const deck = [];
-            const numbers = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-            for (let i = 0; i < 4; i++) deck.push(...numbers);
-            deck.push("JOKER", "JOKER");
-            
-            const hand = [];
-            for (let i = 0; i < 9; i++) {
-                const randIndex = Math.floor(Math.random() * deck.length);
-                hand.push(deck.splice(randIndex, 1)[0]);
-            }
-            // A(14)が一番左、K(1)が右にくるよう強さ順ソート
-            const sortValues = { 'A': 14, 'Q': 12, 'J': 11, '10': 10, '9': 9, '8': 8, '7': 7, '6': 6, '5': 5, '4': 4, '3': 3, '2': 2, 'K': 1, 'JOKER': 15 };
-            return hand.sort((a,b) => sortValues[b] - sortValues[a]);
-        }
+  <!-- ===== SCOREBOARD OVERLAY ===== -->
+  <div id="score-overlay" class="overlay hidden">
+    <div class="overlay-box wide">
+      <div class="overlay-title">スコアボード</div>
+      <div id="score-list" class="score-list"></div>
+      <button class="btn-sub" onclick="Game.toggleScoreboard()">とじる</button>
+    </div>
+  </div>
 
-        function updateUI() {
-            const me = gameState.players[0];
-            document.getElementById("round-num").innerText = gameState.round;
-            document.getElementById("roleDisplay").innerHTML = `あなたの秘密の役職: <span style="color:#3498db; font-weight:bold;">【${me.role}】</span> ${me.role === '子供' ? `(真の陣営: ${me.actualRole})` : ''}`;
+  <!-- ===== FINAL RESULT SCREEN ===== -->
+  <div id="screen-final" class="screen">
+    <div class="screen-inner">
+      <div class="final-title">GAME SET</div>
+      <div class="final-winner" id="final-winner"></div>
+      <div class="final-role" id="final-role"></div>
+      <div class="final-score-list" id="final-score-list"></div>
+      <button class="btn-main" onclick="Game.showScreen('screen-title')">タイトルへ</button>
+    </div>
+  </div>
 
-            const playerListEl = document.getElementById("playerList");
-            playerListEl.innerHTML = "";
-            gameState.players.forEach((p) => {
-                const card = document.createElement("div");
-                card.className = `player-card ${p.isYou ? 'you' : ''}`;
-                card.innerHTML = `<strong>${p.name}</strong><br><span style="color:#f1c40f;">👑 × ${p.crowns}</span><br><span style="color:#9ca3af; font-size:0.9em;">🎴 残り ${p.hand.length}枚</span>`;
-                playerListEl.appendChild(card);
-            });
-
-            const handEl = document.getElementById("myHand");
-            handEl.innerHTML = "";
-            me.hand.forEach((cardVal, idx) => {
-                const card = document.createElement("div");
-                card.className = `card ${cardVal === 'JOKER' ? 'joker' : ''}`;
-                card.innerText = cardVal;
-                card.onclick = () => playCard(idx);
-                handEl.appendChild(card);
-            });
-
-            const fieldEl = document.getElementById("field");
-            fieldEl.innerHTML = "";
-            gameState.field.forEach(f => {
-                const card = document.createElement("div");
-                // オープン前は裏向き風にする表示
-                card.className = `played-card ${f.isCanceled ? 'canceled' : ''}`;
-                card.innerHTML = `<div>${f.isRevealed ? f.card : '？'}</div><div class="owner-name">${f.name}</div>`;
-                fieldEl.appendChild(card);
-            });
-        }
-
-        function playCard(index) {
-            if (gameState.field.some(f => f.pIdx === 0)) {
-                return alert("あなたはすでにカードを場に出しています！");
-            }
-
-            const myCard = gameState.players[0].hand.splice(index, 1)[0];
-            gameState.field.push({ name: "あなた", card: myCard, pIdx: 0, isRevealed: false, isCanceled: false });
-
-            for (let i = 1; i < gameState.players.length; i++) {
-                const aiCard = gameState.players[i].hand.splice(0, 1)[0];
-                gameState.field.push({ name: gameState.players[i].name, card: aiCard, pIdx: i, isRevealed: false, isCanceled: false });
-            }
-
-            addLog("📝 全員がカードを裏向きで出しました。「判定」ボタンを押してオープンしてください。");
-            updateUI();
-        }
-
-        const cardStrength = { "A": 14, "Q": 12, "J": 11, "10": 10, "9": 9, "8": 8, "7": 7, "6": 6, "5": 5, "4": 4, "3": 3, "2": 2, "K": 1 };
-
-        function resolveRound() {
-            if (gameState.field.length === 0) return alert("手札からカードを場に出してください！");
-            if (gameState.field[0].isRevealed) return; // 既に判定済み
-
-            let counts = {};
-            let highestNormal = 1;
-
-            // まずJOKER以外の最高値を計算
-            gameState.field.forEach(f => {
-                f.isRevealed = true;
-                if (f.card !== "JOKER" && cardStrength[f.card] > highestNormal) {
-                    highestNormal = cardStrength[f.card];
-                }
-            });
-
-            // 強さの値を確定させる
-            gameState.field.forEach(f => {
-                if (f.card === "JOKER") {
-                    f.finalValue = highestNormal; 
-                } else {
-                    f.finalValue = cardStrength[f.card];
-                }
-                counts[f.card] = (counts[f.card] || 0) + 1;
-            });
-
-            // 相殺(Fool)チェック
-            gameState.field.forEach(f => {
-                if (counts[f.card] > 1) {
-                    f.isCanceled = true;
-                    addLog(` ✕ ${f.name}の【${f.card}】が被って相殺！ (Fool!)`);
-                }
-            });
-
-            let validPlays = gameState.field.filter(f => !f.isCanceled);
-
-            if (validPlays.length === 0) {
-                addLog(`💥 全員相殺(Fool)したため、ROUND ${gameState.round} の勝者はなし！`);
-            } else {
-                validPlays.sort((a, b) => b.finalValue - a.finalValue);
-                let winner = gameState.players[validPlays[0].pIdx];
-                winner.crowns += 1;
-                addLog(`◆ 【ROUND WINNER】 ${winner.name} が👑を獲得！ (${validPlays[0].card} を提示)`);
-            }
-
-            gameState.round += 1;
-
-            if (gameState.players[0].hand.length === 0) {
-                setTimeout(determineGameWinner, 1500);
-            } else {
-                // 次のラウンドへ進むボタン代わりとしてフィールドを空にする
-                setTimeout(() => {
-                    gameState.field = [];
-                    updateUI();
-                }, 2000);
-            }
-            updateUI();
-        }
-
-        function determineGameWinner() {
-            let summary = { "研究者": 0, "刺客": 0, "魔女": 0 };
-            gameState.players.forEach(p => {
-                summary[p.actualRole] = (summary[p.actualRole] || 0) + p.crowns;
-            });
-
-            let winMessage = `🏁 【GAME SET：最終結果発表】<br><br>
-                              ・研究者陣営の合計👑: <b>${summary['研究者']}個</b><br>
-                              ・刺客陣営の合計👑: <b>${summary['刺客']}個</b><br>
-                              ・魔女の獲得👑: <b>${summary['魔女']}個</b><br><br>🏆 `;
-
-            if (summary["魔女"] > summary["研究者"] && summary["魔女"] > summary["刺客"]) {
-                winMessage += "【魔女陣営】の完全勝利！単独トップで場を支配しました！";
-            } else if (summary["刺客"] > summary["研究者"]) {
-                winMessage += "【刺客陣営】の勝利！研究発表の阻止に成功しました！";
-            } else if (summary["研究者"] > summary["刺客"]) {
-                winMessage += "【研究者陣営】の勝利！無事に研究成果を発表しました！";
-            } else {
-                winMessage += "混沌（同点）により【魔女陣営】の勝利！";
-            }
-
-            let youWon = false;
-            const myActual = gameState.players[0].actualRole;
-            if (winMessage.includes(myActual + "陣営") || (myActual === "魔女" && winMessage.includes("魔女陣営"))) {
-                youWon = true;
-            }
-
-            winMessage += youWon ? `<br><br><span style="color:#2ecc71; font-size:1.2em;">作戦成功！あなたの勝ちです！</span>` : `<br><br><span style="color:#e74c3c; font-size:1.2em;">作戦失敗... あなたの負けです。</span>`;
-
-            document.getElementById("field").innerHTML = `<div style='padding:15px; font-size:1.1em;'>${winMessage}</div>`;
-            document.getElementById("resolve-btn").style.display = "none";
-        }
-
-        function addLog(msg) {
-            const logEl = document.getElementById("gameLog");
-            gameState.log.unshift(msg);
-            logEl.innerHTML = gameState.log.join("<br>");
-        }
-    </script>
+  <script src="js/data.js"></script>
+  <script src="js/game.js"></script>
 </body>
 </html>
